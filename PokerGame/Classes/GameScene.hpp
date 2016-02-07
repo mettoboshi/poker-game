@@ -23,6 +23,9 @@ private:
     int credit { 0 }; // クレジット数
     int win    { 0 }; // Win数
 
+    Label* winLabel    { nullptr }; // WINラベル
+    Label* creditLabel { nullptr }; // Creditラベル
+    
     ui::Button* betButton  { nullptr }; // BETボタン
     ui::Button* dealButton { nullptr }; // DEALボタン
 

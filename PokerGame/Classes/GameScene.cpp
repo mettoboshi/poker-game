@@ -81,6 +81,20 @@ void GameScene::setupScreen()
 
     this->addChild(dealButton, 5);
     dealButton->addTouchEventListener(CC_CALLBACK_2(GameScene::onDealButtonTouched, this));
+    
+    // winラベル
+    winLabel = Label::createWithSystemFont(StringUtils::format("Win : $%d", win), "ariel", 28);
+    winLabel->setAnchorPoint(Vec2(0, 0));
+    winLabel->setPosition(Vec2(34.0f, 108.0f));
+    winLabel->setColor(Color3B(255, 0, 0));
+    this->addChild(winLabel, 5);
+    
+    // creditラベル
+    creditLabel = Label::createWithSystemFont(StringUtils::format("Credit : $%d", credit), "ariel", 28);
+    creditLabel->setAnchorPoint(Vec2(0, 0));
+    creditLabel->setPosition(Vec2(34.0f, 76.0f));
+    creditLabel->setColor(Color3B(255, 255, 255));
+    this->addChild(creditLabel, 5);
 }
 
 // ゲームの初期設定
