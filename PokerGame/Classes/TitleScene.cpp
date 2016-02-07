@@ -49,6 +49,23 @@ bool TitleScene::init()
     ui::Button* startButton { ui::Button::create("title_start.png") };
     startButton->setPosition(Vec2(568.0f, 130.0f));
     this->addChild(startButton);
-    
+    startButton->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchEvent, this));
+
     return true;
 }
+
+// ボタンのタッチイベント
+void TitleScene::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
+{
+    switch (type)
+    {
+        case ui::Widget::TouchEventType::BEGAN:
+        {
+            CCLOG("ボタンが押されました");
+            break;
+        }
+        default:
+            break;
+    }
+}
+
