@@ -20,6 +20,8 @@ public:
 private:
     virtual bool init(); // 初期化
     
+    void setupScreen();  // 画面の設定
+    
     CREATE_FUNC(GameScene);
 };
 
