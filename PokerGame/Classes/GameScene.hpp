@@ -9,6 +9,7 @@
 #include "cocos2d.h"
 
 #include "ui/CocosGUI.h"
+#include "Deck.hpp"
 
 USING_NS_CC;
 
@@ -23,6 +24,8 @@ private:
     int credit { 0 }; // クレジット数
     int win    { 0 }; // Win数
 
+    Deck* deck { nullptr }; // デッキ
+    
     Label* winLabel    { nullptr }; // WINラベル
     Label* creditLabel { nullptr }; // Creditラベル
     
@@ -31,6 +34,9 @@ private:
 
 // ----- インスタンスメソッド
 private:
+    GameScene();  // コンストラクタ
+    ~GameScene(); // デストラクタ
+    
     virtual bool init(); // 初期化
     
     void setupScreen();  // 画面の設定

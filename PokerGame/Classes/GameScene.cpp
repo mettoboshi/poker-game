@@ -19,6 +19,16 @@ Scene* GameScene::createScene()
     return scene;
 }
 
+// コンストラクタ
+GameScene::GameScene()
+{}
+
+// デストラクタ
+GameScene::~GameScene()
+{
+    CC_SAFE_RELEASE_NULL(this->deck);
+}
+
 // 初期化
 bool GameScene::init()
 {
@@ -102,6 +112,10 @@ void GameScene::setupGame()
 {
     // クレジット
     this->credit = START_CREDIT;
+    
+    // デッキ
+    this->deck = Deck::create();
+    CC_SAFE_RETAIN(this->deck);
 }
 
 // BETボタンがタッチされたとき
