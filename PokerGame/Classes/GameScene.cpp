@@ -67,6 +67,13 @@ void GameScene::setupScreen()
     // DEALボタン
     dealButton = ui::Button::create("DEAL.png", "DEAL_on.png", "DEAL_off.png");
     dealButton->setPosition(Vec2(1022.0f, 76.0f));
+
+    // ボタンの表示を非活性にする
+    dealButton->setBright(false);
+
+    // タッチ無効化する
+    dealButton->setTouchEnabled(false);
+
     this->addChild(dealButton, 5);
     dealButton->addTouchEventListener(CC_CALLBACK_2(GameScene::onDealButtonTouched, this));
 }
