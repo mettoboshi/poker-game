@@ -161,6 +161,7 @@
 		84D84C2C1C67265F0025BE2B /* TitleScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TitleScene.hpp; sourceTree = "<group>"; };
 		84D84C2E1C6745080025BE2B /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
 		84D84C2F1C6745080025BE2B /* GameScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameScene.hpp; sourceTree = "<group>"; };
+		84D84C351C6770500025BE2B /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -310,10 +311,11 @@
 			children = (
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
-				84D84C2B1C67265F0025BE2B /* TitleScene.cpp */,
-				84D84C2C1C67265F0025BE2B /* TitleScene.hpp */,
+				84D84C351C6770500025BE2B /* Common.h */,
 				84D84C2E1C6745080025BE2B /* GameScene.cpp */,
 				84D84C2F1C6745080025BE2B /* GameScene.hpp */,
+				84D84C2B1C67265F0025BE2B /* TitleScene.cpp */,
+				84D84C2C1C67265F0025BE2B /* TitleScene.hpp */,
 			);
 			name = Classes;
 			path = ../Classes;

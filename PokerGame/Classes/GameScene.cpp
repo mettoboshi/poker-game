@@ -5,6 +5,8 @@
 
 #include "GameScene.hpp"
 
+#include "Common.h"
+
 Scene* GameScene::createScene()
 {
     // シーンの作成
@@ -85,7 +87,7 @@ void GameScene::setupScreen()
 void GameScene::setupGame()
 {
     // クレジット
-    this->credit = 100;
+    this->credit = START_CREDIT;
 }
 
 // BETボタンがタッチされたとき
