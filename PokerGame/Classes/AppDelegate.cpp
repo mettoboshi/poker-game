@@ -27,20 +27,26 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLViewImpl::createWithRect("HelloCpp", Rect(0, 0, 960, 640));
+        glview = GLViewImpl::create("HelloCpp");
         director->setOpenGLView(glview);
     }
 
-    director->getOpenGLView()->setDesignResolutionSize(960, 640, ResolutionPolicy::SHOW_ALL);
-
+    // 画面サイズを固定する
+    director->getOpenGLView()->setDesignResolutionSize(1136, 640, ResolutionPolicy::SHOW_ALL);
+    
     // turn on display FPS
     director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
-
-    FileUtils::getInstance()->addSearchPath("res");
-
+    
+    // Resource配下のフォルダをSearchPathに追加する
+    FileUtils::getInstance()->addSearchPath("card");
+    FileUtils::getInstance()->addSearchPath("title");
+    FileUtils::getInstance()->addSearchPath("game");
+    FileUtils::getInstance()->addSearchPath("text");
+    FileUtils::getInstance()->addSearchPath("sound");
+    
     // create a scene. it's an autorelease object
     Scene* scene { TitleScene::createScene() };
 
