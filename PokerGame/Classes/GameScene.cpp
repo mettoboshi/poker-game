@@ -57,4 +57,46 @@ void GameScene::setupScreen()
     Sprite* bgLogo { Sprite::create("bg_logo.png") };
     bgLogo->setPosition(Vec2(204.0f, 544.0f));
     this->addChild(bgLogo, 4);
+    
+    // BETボタン
+    betButton = ui::Button::create("BET.png", "BET_on.png", "BET_off.png");
+    betButton->setPosition(Vec2(795.0f, 76.0f));
+    this->addChild(betButton, 5);
+    betButton->addTouchEventListener(CC_CALLBACK_2(GameScene::onBetButtonTouched, this));
+    
+    // DEALボタン
+    dealButton = ui::Button::create("DEAL.png", "DEAL_on.png", "DEAL_off.png");
+    dealButton->setPosition(Vec2(1022.0f, 76.0f));
+    this->addChild(dealButton, 5);
+    dealButton->addTouchEventListener(CC_CALLBACK_2(GameScene::onDealButtonTouched, this));
+}
+
+// BETボタンがタッチされたとき
+void GameScene::onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type)
+{
+    switch (type)
+    {
+        case ui::Widget::TouchEventType::BEGAN:
+        {
+            CCLOG("BET");
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+// DEALボタンがタッチされたとき
+void GameScene::onDealButtonTouched(Ref *pSender, ui::Widget::TouchEventType type)
+{
+    switch (type)
+    {
+        case ui::Widget::TouchEventType::BEGAN:
+        {
+            CCLOG("DEAL");
+            break;
+        }
+        default:
+            break;
+    }
 }
