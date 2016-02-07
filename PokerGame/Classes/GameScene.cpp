@@ -111,7 +111,16 @@ void GameScene::onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type
     {
         case ui::Widget::TouchEventType::BEGAN:
         {
-            CCLOG("BET");
+            // Win数の初期化
+            this->win = 0;
+
+            // クレジットからBET枚数を引く
+            this->credit -= BET_NUM;
+
+            // ラベルを更新
+            this->winLabel->setString(StringUtils::format("Win : $%d", win));
+            this->creditLabel->setString(StringUtils::format("Credit : $%d", credit));
+
             break;
         }
         default:
