@@ -45,5 +45,10 @@ bool TitleScene::init()
     logoSprite->setPosition(Vec2(568.0f, 400.0f));
     this->addChild(logoSprite);
     
+    // スタートボタン
+    ui::Button* startButton { ui::Button::create("title_start.png") };
+    startButton->setPosition(Vec2(568.0f, 130.0f));
+    this->addChild(startButton);
+    
     return true;
 }
