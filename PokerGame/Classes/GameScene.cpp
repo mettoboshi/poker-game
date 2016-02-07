@@ -25,7 +25,10 @@ bool GameScene::init()
     {
         return false;
     }
-    
+
+    // ゲームの初期設定
+    this->setupGame();
+
     // 画面表示の設定
     this->setupScreen();
     
@@ -76,6 +79,13 @@ void GameScene::setupScreen()
 
     this->addChild(dealButton, 5);
     dealButton->addTouchEventListener(CC_CALLBACK_2(GameScene::onDealButtonTouched, this));
+}
+
+// ゲームの初期設定
+void GameScene::setupGame()
+{
+    // クレジット
+    this->credit = 100;
 }
 
 // BETボタンがタッチされたとき
