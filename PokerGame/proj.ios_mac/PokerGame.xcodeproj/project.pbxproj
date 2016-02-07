@@ -62,6 +62,7 @@
 		84D84C2D1C67265F0025BE2B /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84D84C2B1C67265F0025BE2B /* TitleScene.cpp */; };
 		84D84C301C6745080025BE2B /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84D84C2E1C6745080025BE2B /* GameScene.cpp */; };
 		84D84C3A1C67AB1E0025BE2B /* Card.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84D84C381C67AB1E0025BE2B /* Card.cpp */; };
+		84D84C3D1C67B1EF0025BE2B /* Deck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84D84C3B1C67B1EF0025BE2B /* Deck.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -165,6 +166,8 @@
 		84D84C351C6770500025BE2B /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		84D84C381C67AB1E0025BE2B /* Card.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Card.cpp; sourceTree = "<group>"; };
 		84D84C391C67AB1E0025BE2B /* Card.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Card.hpp; sourceTree = "<group>"; };
+		84D84C3B1C67B1EF0025BE2B /* Deck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Deck.cpp; sourceTree = "<group>"; };
+		84D84C3C1C67B1EF0025BE2B /* Deck.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Deck.hpp; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -317,6 +320,8 @@
 				84D84C381C67AB1E0025BE2B /* Card.cpp */,
 				84D84C391C67AB1E0025BE2B /* Card.hpp */,
 				84D84C351C6770500025BE2B /* Common.h */,
+				84D84C3B1C67B1EF0025BE2B /* Deck.cpp */,
+				84D84C3C1C67B1EF0025BE2B /* Deck.hpp */,
 				84D84C2E1C6745080025BE2B /* GameScene.cpp */,
 				84D84C2F1C6745080025BE2B /* GameScene.hpp */,
 				84D84C2B1C67265F0025BE2B /* TitleScene.cpp */,
@@ -515,6 +520,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84D84C3D1C67B1EF0025BE2B /* Deck.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
