@@ -31,6 +31,14 @@ bool TitleScene::init()
     {
         return false;
     }
+
+    // 画面サイズ
+    Size visibleSize { Director::getInstance()->getVisibleSize() };
     
+    // 背景
+    Sprite* bgSprite { Sprite::create("title_bg.png") };
+    bgSprite->setPosition(visibleSize / 2);
+    this->addChild(bgSprite);
+
     return true;
 }
