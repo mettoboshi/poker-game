@@ -40,5 +40,10 @@ bool TitleScene::init()
     bgSprite->setPosition(visibleSize / 2);
     this->addChild(bgSprite);
 
+    // ロゴ
+    Sprite* logoSprite { Sprite::create("title_logo.png") };
+    logoSprite->setPosition(Vec2(568.0f, 400.0f));
+    this->addChild(logoSprite);
+    
     return true;
 }
