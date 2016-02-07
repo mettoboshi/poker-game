@@ -63,7 +63,9 @@ void TitleScene::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
         case ui::Widget::TouchEventType::BEGAN:
         {
             Scene* gameScene { GameScene::createScene() };
-            Director::getInstance()->replaceScene(gameScene);
+            TransitionFade* fade = TransitionFade::create(1.0f, gameScene);
+            Director::getInstance()->replaceScene(fade);
+
             break;
         }
         default:
