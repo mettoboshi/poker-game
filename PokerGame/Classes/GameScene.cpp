@@ -135,6 +135,14 @@ void GameScene::onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type
             this->winLabel->setString(StringUtils::format("Win : $%d", win));
             this->creditLabel->setString(StringUtils::format("Credit : $%d", credit));
 
+            // DEBUG:デッキの中身を確認
+            this->deck->setAllCard();
+            for (int i { 0 } ; i < 52; ++i)
+            {
+                Card *card { deck->dealCard() };
+                CCLOG("NO:%d マーク： %d 数字： %d", i, card->getSuit(), card->getNumber());
+            }
+            
             break;
         }
         default:
