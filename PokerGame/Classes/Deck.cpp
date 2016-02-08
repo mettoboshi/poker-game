@@ -46,3 +46,13 @@ Card* Deck::dealCard() {
     
     return card;
 }
+
+// シャッフル
+void Deck::shuffle() {
+    std::random_device rd;
+    std::mt19937 engine(rd());
+    
+    std::shuffle(this->deckData.begin(), this->deckData.end(), engine);
+
+    return;
+}

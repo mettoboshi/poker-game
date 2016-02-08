@@ -137,6 +137,7 @@ void GameScene::onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type
 
             // DEBUG:デッキの中身を確認
             this->deck->setAllCard();
+            this->deck->shuffle();
             for (int i { 0 } ; i < 52; ++i)
             {
                 Card *card { deck->dealCard() };

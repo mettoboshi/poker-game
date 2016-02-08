@@ -29,6 +29,7 @@ private:
 public:
     void setAllCard(); // デッキにカードをセット
     Card* dealCard();  // カードを１枚配る
+    void shuffle();    // シャッフル
     
 };
 
