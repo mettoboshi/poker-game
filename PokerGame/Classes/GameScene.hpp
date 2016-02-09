@@ -10,6 +10,7 @@
 
 #include "ui/CocosGUI.h"
 #include "Deck.hpp"
+#include "Hands.hpp"
 
 USING_NS_CC;
 
@@ -25,6 +26,7 @@ private:
     int win    { 0 }; // Win数
 
     Deck* deck { nullptr }; // デッキ
+    Hands* hands { nullptr }; // 手札
     
     Label* winLabel    { nullptr }; // WINラベル
     Label* creditLabel { nullptr }; // Creditラベル

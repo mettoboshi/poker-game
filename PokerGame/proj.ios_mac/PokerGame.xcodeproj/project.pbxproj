@@ -52,6 +52,7 @@
 		521A8EAA19F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
+		8402ADB61C6A4A050066BD29 /* Hands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8402ADB41C6A4A050066BD29 /* Hands.cpp */; };
 		84D84C181C6722B40025BE2B /* cards.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84D84C161C6722B40025BE2B /* cards.plist */; };
 		84D84C191C6722B40025BE2B /* cards.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = 84D84C171C6722B40025BE2B /* cards.pvr.ccz */; };
 		84D84C1B1C6722D90025BE2B /* card in Resources */ = {isa = PBXBuildFile; fileRef = 84D84C1A1C6722D90025BE2B /* card */; };
@@ -152,6 +153,8 @@
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		8402ADB41C6A4A050066BD29 /* Hands.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Hands.cpp; sourceTree = "<group>"; };
+		8402ADB51C6A4A050066BD29 /* Hands.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Hands.hpp; sourceTree = "<group>"; };
 		84D84C161C6722B40025BE2B /* cards.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cards.plist; sourceTree = "<group>"; };
 		84D84C171C6722B40025BE2B /* cards.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = cards.pvr.ccz; sourceTree = "<group>"; };
 		84D84C1A1C6722D90025BE2B /* card */ = {isa = PBXFileReference; lastKnownFileType = folder; path = card; sourceTree = "<group>"; };
@@ -324,6 +327,8 @@
 				84D84C3C1C67B1EF0025BE2B /* Deck.hpp */,
 				84D84C2E1C6745080025BE2B /* GameScene.cpp */,
 				84D84C2F1C6745080025BE2B /* GameScene.hpp */,
+				8402ADB41C6A4A050066BD29 /* Hands.cpp */,
+				8402ADB51C6A4A050066BD29 /* Hands.hpp */,
 				84D84C2B1C67265F0025BE2B /* TitleScene.cpp */,
 				84D84C2C1C67265F0025BE2B /* TitleScene.hpp */,
 			);
@@ -526,6 +531,7 @@
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				84D84C301C6745080025BE2B /* GameScene.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				8402ADB61C6A4A050066BD29 /* Hands.cpp in Sources */,
 				84D84C2D1C67265F0025BE2B /* TitleScene.cpp in Sources */,
 				84D84C3A1C67AB1E0025BE2B /* Card.cpp in Sources */,
 			);

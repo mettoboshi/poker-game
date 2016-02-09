@@ -27,6 +27,7 @@ GameScene::GameScene()
 GameScene::~GameScene()
 {
     CC_SAFE_RELEASE_NULL(this->deck);
+    CC_SAFE_RELEASE_NULL(this->hands);
 }
 
 // 初期化
@@ -116,6 +117,10 @@ void GameScene::setupGame()
     // デッキ
     this->deck = Deck::create();
     CC_SAFE_RETAIN(this->deck);
+    
+    // 手札
+    this->hands = Hands::create();
+    CC_SAFE_RETAIN(this->hands);
 }
 
 // BETボタンがタッチされたとき
@@ -135,12 +140,24 @@ void GameScene::onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type
             this->winLabel->setString(StringUtils::format("Win : $%d", win));
             this->creditLabel->setString(StringUtils::format("Credit : $%d", credit));
 
-            // DEBUG:デッキの中身を確認
+            // デッキにカードをセット
             this->deck->setAllCard();
+
+            // デッキをシャッフル
             this->deck->shuffle();
-            for (int i { 0 } ; i < 52; ++i)
+
+            // 手札を配る
+            for (int i { 0 } ; i < HANDS_MAX; ++i)
             {
                 Card *card { deck->dealCard() };
+                hands->setCard(i, card);
+            }
+            
+            // DEBUG:手札の中身を確認
+            CCLOG("---");
+            for (int i=0; i<HANDS_MAX; ++i)
+            {
+                Card *card = hands->getCard(i);
                 CCLOG("NO:%d マーク： %d 数字： %d", i, card->getSuit(), card->getNumber());
             }
             
