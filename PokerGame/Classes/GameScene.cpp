@@ -216,6 +216,9 @@ void GameScene::betAction() {
 
         // カードを透明にする
         cardSprite->setOpacity(0);
+        
+        // カードの横幅を元に戻す
+        cardSprite->setScaleX(1.0f);
 
         // アクションを作成
         Vector<FiniteTimeAction *>  moveActions;
@@ -224,11 +227,17 @@ void GameScene::betAction() {
         moveActions.pushBack(FadeIn::create(0.4f));
         Spawn* moveAction { Spawn::create(moveActions) };
         
-        // アクションを実行
-        cardSprite->runAction(Sequence::createWithTwoActions(DelayTime::create(0.2f * i), moveAction));
+        // アクションをまとめる
+        Vector<FiniteTimeAction *> betActions;
+        betActions.pushBack(DelayTime::create(0.2f * i));
+        betActions.pushBack(moveAction);
+        // 表にめくるアクション（途中まで）
+        betActions.pushBack(ScaleTo::create(0.3f, 0.0f, 1.0f));
         
-        // アクションをまとめて書いた場合
-        // cardSprite->runAction(Sequence::create(DelayTime::create(0.2f * i), Spawn::createWithTwoActions(MoveTo::create(0.4f, Vec2(cardSprite->getPositionX(), 288.0f)), FadeIn::create(0.4)), nullptr));
+        Sequence* betAction { Sequence::create(betActions) };
+        
+        // アクションを実行
+        cardSprite->runAction(betAction);
     }
     
     return;
