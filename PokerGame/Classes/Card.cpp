@@ -43,3 +43,33 @@ int Card::getNumber() const
 {
     return this->number;
 }
+
+std::string Card::getFileName() const
+{
+    std::string str;
+    
+    switch (suit)
+    {
+        case Suit::SPADE:
+            str = cocos2d::StringUtils::format("s%d.png", number);
+            break;
+            
+        case Suit::HEART:
+            str = cocos2d::StringUtils::format("h%d.png", number);
+            break;
+            
+        case Suit::DIAMOND:
+            str = cocos2d::StringUtils::format("d%d.png", number);
+            break;
+            
+        case Suit::CLUB:
+            str = cocos2d::StringUtils::format("c%d.png", number);
+            break;
+            
+        default:
+            break;
+    }
+    
+    return str;
+}
+

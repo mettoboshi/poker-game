@@ -30,6 +30,7 @@ private:
 public:
     Suit getSuit() const;  // マークを取得
     int getNumber() const; // 数字を取得
+    std::string getFileName() const; // ファイル名を取得
 };
 
 #endif /* __PokerGame__Card__ */

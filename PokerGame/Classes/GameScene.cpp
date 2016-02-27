@@ -183,6 +183,14 @@ void GameScene::onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type
                 CCLOG("NO:%d マーク： %d 数字： %d", i, card->getSuit(), card->getNumber());
             }
             
+            // DEBUG:手札を表示（仮）
+            for (int i { 0 }; i < HANDS_MAX; i++){
+                Card *card { hands->getCard(i) };
+                std::string cardName { card->getFileName() };
+                Texture2D* cardTexture { Director::getInstance()->getTextureCache()->getTextureForKey(cardName) };
+                cardSprites.at(i)->setTexture(cardTexture);
+            }
+
             break;
         }
         default:
