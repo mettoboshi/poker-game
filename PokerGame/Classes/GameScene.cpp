@@ -219,12 +219,16 @@ void GameScene::betAction() {
 
         // アクションを作成
         Vector<FiniteTimeAction *>  moveActions;
+        DelayTime::create(i * 0.2f);
         moveActions.pushBack(MoveTo::create(0.4f, Vec2(cardSprite->getPositionX(), 288.0f)));
         moveActions.pushBack(FadeIn::create(0.4f));
         Spawn* moveAction { Spawn::create(moveActions) };
         
         // アクションを実行
-        cardSprite->runAction(moveAction);
+        cardSprite->runAction(Sequence::createWithTwoActions(DelayTime::create(0.2f * i), moveAction));
+        
+        // アクションをまとめて書いた場合
+        // cardSprite->runAction(Sequence::create(DelayTime::create(0.2f * i), Spawn::createWithTwoActions(MoveTo::create(0.4f, Vec2(cardSprite->getPositionX(), 288.0f)), FadeIn::create(0.4)), nullptr));
     }
     
     return;
