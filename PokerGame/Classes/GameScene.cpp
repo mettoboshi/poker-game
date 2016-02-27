@@ -106,6 +106,19 @@ void GameScene::setupScreen()
     creditLabel->setPosition(Vec2(34.0f, 76.0f));
     creditLabel->setColor(Color3B(255, 255, 255));
     this->addChild(creditLabel, 5);
+    
+    // 手札の初期化
+    cardSprites.clear();
+
+    // 手札の表示
+    for(int i { 0 }; i < HANDS_MAX; ++i) {
+        // スプライトを作成して配置
+        Sprite* sprite { Sprite::create("card_1.png") };
+        sprite->setPosition(Vec2((226.0f * i) + 116.0f, 288.0f));
+        this->addChild(sprite, 5);
+        // スプライトを配列に保存
+        cardSprites.pushBack(sprite);
+    }
 }
 
 // ゲームの初期設定
