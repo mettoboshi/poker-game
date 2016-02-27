@@ -47,6 +47,8 @@ private:
     void setupGame();    // ゲームの初期設定
 
     void onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type);  // BETボタンがタッチされたとき
+    void betAction();    // BETした時のアクション
+
     void onDealButtonTouched(Ref *pSender, ui::Widget::TouchEventType type); // DEALボタンがタッチされたとき
 
     CREATE_FUNC(GameScene);

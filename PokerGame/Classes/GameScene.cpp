@@ -186,20 +186,36 @@ void GameScene::onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type
                 Card *card = hands->getCard(i);
                 CCLOG("NO:%d マーク： %d 数字： %d", i, card->getSuit(), card->getNumber());
             }
-            
-            // DEBUG:手札を表示（仮）
-            for (int i { 0 }; i < HANDS_MAX; i++){
-                Card *card { hands->getCard(i) };
-                std::string cardName { card->getFileName() };
-                Texture2D* cardTexture { Director::getInstance()->getTextureCache()->getTextureForKey(cardName) };
-                cardSprites.at(i)->setTexture(cardTexture);
-            }
+
+            // BETした時のアクション
+            this->betAction();
 
             break;
         }
         default:
             break;
     }
+}
+
+// BETした時のアクション
+void GameScene::betAction() {
+
+    // カードの初期処理
+    for (int i { 0 }; i < HANDS_MAX; i++){
+        Sprite* cardSprite { this->cardSprites.at(i) };
+        
+        // カードを全て裏面にする
+        Texture2D* cardTexture = Director::getInstance()->getTextureCache()->getTextureForKey("card_1.png");
+        cardSprite->setTexture(cardTexture);
+
+        // カードの表示位置を変更
+        cardSprite->setPosition(Vec2(cardSprite->getPositionX(), 480.0f));
+
+        // カードを表示
+        cardSprite->setVisible(true);
+    }
+
+    return;
 }
 
 // DEALボタンがタッチされたとき
