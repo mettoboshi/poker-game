@@ -200,7 +200,7 @@ void GameScene::onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type
 // BETした時のアクション
 void GameScene::betAction() {
 
-    // カードの初期処理
+    // 配るアクションを実行する
     for (int i { 0 }; i < HANDS_MAX; i++){
         Sprite* cardSprite { this->cardSprites.at(i) };
         
@@ -213,8 +213,14 @@ void GameScene::betAction() {
 
         // カードを表示
         cardSprite->setVisible(true);
-    }
 
+        // アクションを作成
+        MoveTo* moveAction = MoveTo::create(0.4f, Vec2(cardSprite->getPositionX(), 288.0f));
+        
+        // アクションを実行
+        cardSprite->runAction(moveAction);
+    }
+    
     return;
 }
 
