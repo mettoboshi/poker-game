@@ -125,6 +125,10 @@ void GameScene::setupScreen()
         Sprite* sprite { Sprite::create("card_1.png") };
         sprite->setPosition(Vec2((226.0f * i) + 116.0f, 288.0f));
         this->addChild(sprite, 5);
+
+        // スプライトを非表示にする
+        sprite->setVisible(false);
+
         // スプライトを配列に保存
         cardSprites.pushBack(sprite);
     }
