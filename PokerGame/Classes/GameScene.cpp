@@ -107,6 +107,15 @@ void GameScene::setupScreen()
     creditLabel->setColor(Color3B(255, 255, 255));
     this->addChild(creditLabel, 5);
     
+    // トランプ画像の読み込み
+    TextureCache* textureCache { Director::getInstance()->getTextureCache() };
+    for (int i { 1 } ; i <= 13; ++i){
+        textureCache->addImage(StringUtils::format("s%d.png", i));
+        textureCache->addImage(StringUtils::format("h%d.png", i));
+        textureCache->addImage(StringUtils::format("d%d.png", i));
+        textureCache->addImage(StringUtils::format("c%d.png", i));
+    }
+
     // 手札の初期化
     cardSprites.clear();
 
