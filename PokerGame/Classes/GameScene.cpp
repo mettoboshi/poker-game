@@ -214,8 +214,14 @@ void GameScene::betAction() {
         // カードを表示
         cardSprite->setVisible(true);
 
+        // カードを透明にする
+        cardSprite->setOpacity(0);
+
         // アクションを作成
-        MoveTo* moveAction = MoveTo::create(0.4f, Vec2(cardSprite->getPositionX(), 288.0f));
+        Vector<FiniteTimeAction *>  moveActions;
+        moveActions.pushBack(MoveTo::create(0.4f, Vec2(cardSprite->getPositionX(), 288.0f)));
+        moveActions.pushBack(FadeIn::create(0.4f));
+        Spawn* moveAction { Spawn::create(moveActions) };
         
         // アクションを実行
         cardSprite->runAction(moveAction);
