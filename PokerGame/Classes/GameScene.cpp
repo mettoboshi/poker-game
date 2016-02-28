@@ -124,7 +124,7 @@ void GameScene::setupScreen()
         // スプライトを作成して配置
         Sprite* sprite { Sprite::create("card_1.png") };
         sprite->setPosition(Vec2((226.0f * i) + 116.0f, 288.0f));
-        this->addChild(sprite, 5);
+        this->addChild(sprite, 5, i);
 
         // スプライトを非表示にする
         sprite->setVisible(false);
@@ -234,6 +234,11 @@ void GameScene::betAction() {
         // 表にめくるアクション（途中まで）
         betActions.pushBack(ScaleTo::create(0.3f, 0.0f, 1.0f));
         
+        betActions.pushBack(CallFunc::create([cardSprite](){
+            CCLOG("スプライトの番号 : %d", cardSprite->getTag());
+            CCLOG("スプライトの変更");
+        }));
+
         Sequence* betAction { Sequence::create(betActions) };
         
         // アクションを実行
