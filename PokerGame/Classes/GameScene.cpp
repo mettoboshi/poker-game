@@ -231,14 +231,17 @@ void GameScene::betAction() {
         Vector<FiniteTimeAction *> betActions;
         betActions.pushBack(DelayTime::create(0.2f * i));
         betActions.pushBack(moveAction);
-        // 表にめくるアクション（途中まで）
-        betActions.pushBack(ScaleTo::create(0.3f, 0.0f, 1.0f));
-        
-        betActions.pushBack(CallFunc::create([cardSprite](){
-            CCLOG("スプライトの番号 : %d", cardSprite->getTag());
-            CCLOG("スプライトの変更");
-        }));
 
+        // 表にめくるアクション
+        betActions.pushBack(ScaleTo::create(0.3f, 0.0f, 1.0f));
+        betActions.pushBack(CallFunc::create([this, cardSprite](){
+            // テクスチャを変更
+            Card *card { this->hands->getCard(cardSprite->getTag()) };
+            Texture2D* cardTexture = Director::getInstance()->getTextureCache()->getTextureForKey(card->getFileName());
+            cardSprite->setTexture(cardTexture);
+        }));
+        betActions.pushBack(ScaleTo::create(0.3f, 1, 1));
+        
         Sequence* betAction { Sequence::create(betActions) };
         
         // アクションを実行
