@@ -37,6 +37,9 @@ private:
     
     ui::Button* betButton  { nullptr }; // BETボタン
     ui::Button* dealButton { nullptr }; // DEALボタン
+    Vector<ui::Button*> holdButtons {}; // HOLDボタン
+
+    Vector<Sprite*> holdSprites; // HOLD画像
 
 // ----- インスタンスメソッド
 private:
@@ -54,6 +57,7 @@ private:
     void betAction();    // BETした時のアクション
 
     void onDealButtonTouched(Ref *pSender, ui::Widget::TouchEventType type); // DEALボタンがタッチされたとき
+    void onHoldButtonTouched(Ref *pSender, ui::Widget::TouchEventType type); // HOLDボタンのタッチイベント
 
     CREATE_FUNC(GameScene);
 };

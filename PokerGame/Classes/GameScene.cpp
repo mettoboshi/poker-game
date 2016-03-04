@@ -132,6 +132,23 @@ void GameScene::setupScreen()
         // スプライトを配列に保存
         cardSprites.pushBack(sprite);
     }
+    
+    // HOLDボタンとHOLD画像
+    for(int i = 0; i < HANDS_MAX; ++i) {
+        // HOLDボタン
+        ui::Button* holdButton { ui::Button::create("card_on.png") };
+        holdButton->setPosition(Vec2((226.0f * i) + 116.0f, 288.0f));
+        holdButton->addTouchEventListener(CC_CALLBACK_2(GameScene::onHoldButtonTouched, this));
+        holdButton->setOpacity(0);
+        this->holdButtons.pushBack(holdButton);
+        this->addChild(holdButton, 2, i);
+        
+        // HOLD画像
+        Sprite* holdSprite { Sprite::create("hold.png") };
+        holdSprite->setPosition(Vec2((226.0f * i) + 116.0f, 288.0f));
+        this->holdSprites.pushBack(holdSprite);
+        this->addChild(holdSprite, 6, i);
+    }
 }
 
 // ゲームの初期設定
@@ -286,6 +303,21 @@ void GameScene::onDealButtonTouched(Ref *pSender, ui::Widget::TouchEventType typ
             CCLOG("DEAL");
             break;
         }
+        default:
+            break;
+    }
+}
+
+// HOLDボタンがタッチされたとき
+void GameScene::onHoldButtonTouched(Ref *pSender, ui::Widget::TouchEventType type)
+{
+    Sprite *sprite { static_cast<Sprite*>(pSender) };
+    
+    switch (type)
+    {
+        case ui::Widget::TouchEventType::BEGAN:
+            CCLOG("HOLD:%d", sprite->getTag());
+            break;
         default:
             break;
     }
