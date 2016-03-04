@@ -217,8 +217,25 @@ void GameScene::changeScreen()
             break;
         }
         case GameStatus::HOLD:
+        {
+            // BETボタン：押せない
+            this->betButton->setBright(false);
+            this->betButton->setTouchEnabled(false);
+
+            // DEALボタン：押せる
+            this->dealButton->setBright(true);
+            this->dealButton->setTouchEnabled(true);
+
+            // HOLD
+            for(int i = 0; i < HANDS_MAX; ++i) {
+                // HOLDボタン：押せる
+                this->holdButtons.at(i)->setVisible(true);
+
+                // HOLD表示：非表示
+                holdSprites.at(i)->setVisible(false);
+            }
             break;
-            
+        }
         case GameStatus::DEAL:
             break;
             
@@ -321,6 +338,15 @@ void GameScene::betAction() {
         }));
         betActions.pushBack(ScaleTo::create(0.3f, 1, 1));
         
+        // ステータスを変更し、ボタンの制御をおこなう
+        betActions.pushBack(CallFunc::create([this, i](){
+            if(i == HANDS_MAX - 1) {
+                // i = HAND_MAX - 1のとき、ステータスをHOLDに変更
+                this->gameStatus = GameStatus::HOLD;
+                this->changeScreen();
+            }
+        }));
+        
         Sequence* betAction { Sequence::create(betActions) };
         
         // アクションを実行
@@ -353,11 +379,14 @@ void GameScene::onHoldButtonTouched(Ref *pSender, ui::Widget::TouchEventType typ
     switch (type)
     {
         case ui::Widget::TouchEventType::BEGAN:
+        {
+            int cardNumber { sprite->getTag() };
 
             // HOLD状態を変更する
-            CCLOG("HOLD:%d isHold:%d", sprite->getTag(), this->hands->toggleHold(sprite->getTag()));
+            this->holdSprites.at(cardNumber)->setVisible(this->hands->toggleHold(cardNumber));
             
             break;
+        }
         default:
             break;
     }
