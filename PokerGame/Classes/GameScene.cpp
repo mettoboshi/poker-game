@@ -316,7 +316,10 @@ void GameScene::onHoldButtonTouched(Ref *pSender, ui::Widget::TouchEventType typ
     switch (type)
     {
         case ui::Widget::TouchEventType::BEGAN:
-            CCLOG("HOLD:%d", sprite->getTag());
+
+            // HOLD状態を変更する
+            CCLOG("HOLD:%d isHold:%d", sprite->getTag(), this->hands->toggleHold(sprite->getTag()));
+            
             break;
         default:
             break;
