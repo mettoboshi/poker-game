@@ -53,7 +53,7 @@ private:
 
     void changeScreen(); // ゲームのステータスに応じた画面制御
 
-    void cardAction(Sprite* sprite, GameStatus nextStatus); // カードのアクションを実行する
+    void cardAction(Sprite* sprite, GameStatus nextStatus, bool isLast); // カードのアクションを実行する
     
     void onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type);  // BETボタンがタッチされたとき
     void betAction();    // BETした時のアクション

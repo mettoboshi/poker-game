@@ -256,15 +256,31 @@ void GameScene::changeScreen()
             break;
         }
         case GameStatus::OVER:
-            break;
+        {
+            // BETボタン：押せる
+            this->betButton->setBright(true);
+            this->betButton->setTouchEnabled(true);
             
+            // DEALボタン：押せない
+            this->dealButton->setBright(false);
+            this->dealButton->setTouchEnabled(false);
+            
+            for(int i = 0; i < HANDS_MAX; ++i) {
+                // HOLDボタン: 押せない
+                this->holdButtons.at(i)->setVisible(false);
+                
+                // HOLD表示：非表示
+                this->holdSprites.at(i)->setVisible(false);
+            }
+            break;
+        }
         default:
             break;
     }
 }
 
 // カードのアクションを実行する
-void GameScene::cardAction(Sprite* sprite, GameStatus nextStatus)
+void GameScene::cardAction(Sprite* sprite, GameStatus nextStatus, bool isLast)
 {
     // カードを裏面にする
     Texture2D* cardTexture = Director::getInstance()->getTextureCache()->getTextureForKey("card_1.png");
@@ -304,9 +320,9 @@ void GameScene::cardAction(Sprite* sprite, GameStatus nextStatus)
     }));
     betActions.pushBack(ScaleTo::create(0.3f, 1, 1));
     
-    // ステータスを変更し、ボタンの制御をおこなう
-    betActions.pushBack(CallFunc::create([this, sprite, nextStatus](){
-        if(sprite->getTag() == HANDS_MAX - 1) {
+    // ステータスを変更し、ボタンの制御、手役の決定をおこなう
+    betActions.pushBack(CallFunc::create([this, nextStatus, isLast](){
+        if(isLast) {
             // スプライトのタグがHAND_MAX - 1のとき、ステータスを変更する
             this->gameStatus = nextStatus;
 
@@ -373,9 +389,9 @@ void GameScene::betAction() {
     // 配るアクションを実行する
     for (int i { 0 }; i < HANDS_MAX; i++){
         Sprite* cardSprite { this->cardSprites.at(i) };
-        
+
         // アクションを実行
-        this->cardAction(cardSprite, GameStatus::HOLD);
+        this->cardAction(cardSprite, GameStatus::HOLD, i == HANDS_MAX - 1 ? true : false);
     }
     
     return;
@@ -394,6 +410,13 @@ void GameScene::onDealButtonTouched(Ref *pSender, ui::Widget::TouchEventType typ
             // ステータスに応じた画面制御
             this->changeScreen();
             
+            // 手札を配る
+            for (int i { 0 }; i < HANDS_MAX; i++){
+                if (this->hands->isHold(i) == false) {
+                    hands->setCard(i, deck->dealCard());
+                }
+            }
+
             // アクションを実行
             this->dealAction();
 
@@ -407,14 +430,31 @@ void GameScene::onDealButtonTouched(Ref *pSender, ui::Widget::TouchEventType typ
 // DEAL時のアクション
 void GameScene::dealAction()
 {
-    // 配るアクションを実行する
+    // HOLDされていないカードを探す
+    Vector<Sprite*> changedCards {};
     for (int i { 0 }; i < HANDS_MAX; i++){
         Sprite* cardSprite { this->cardSprites.at(i) };
 
         // ホールドされている場合は配り直さない
         if(this->hands->isHold(cardSprite->getTag())) continue;
+        
+        changedCards.pushBack(cardSprites.at(i));
+    }
 
-        this->cardAction(cardSprite, GameStatus::OVER);
+    // 全てがHOLDされている場合はカードアクションは実行せず結果を表示する
+    if(changedCards.empty())
+    {
+        // ステータスをOVERに変更
+        this->gameStatus = GameStatus::OVER;
+        
+        // ステータスに応じた画面制御
+        this->changeScreen();
+    }
+    
+    // 配るアクションを実行する
+    for(int i { 0 }; i < changedCards.size(); i++)
+    {
+        this->cardAction(changedCards.at(i), GameStatus::OVER, i == (changedCards.size() - 1) ? true : false);
     }
 }
 
