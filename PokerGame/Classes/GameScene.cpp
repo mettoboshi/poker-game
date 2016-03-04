@@ -149,6 +149,31 @@ void GameScene::setupGame()
     CC_SAFE_RETAIN(this->hands);
 }
 
+// ゲームのステータスに応じた画面制御
+void GameScene::changeScreen()
+{
+    switch (gameStatus)
+    {
+        case GameStatus::BET:
+            break;
+            
+        case GameStatus::BET_WAIT:
+            break;
+            
+        case GameStatus::HOLD:
+            break;
+            
+        case GameStatus::DEAL:
+            break;
+            
+        case GameStatus::OVER:
+            break;
+            
+        default:
+            break;
+    }
+}
+
 // BETボタンがタッチされたとき
 void GameScene::onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type)
 {

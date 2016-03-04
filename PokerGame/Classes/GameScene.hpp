@@ -22,6 +22,8 @@ public:
 
 // ----- インスタンス変数
 private:
+    GameStatus gameStatus; // ゲームのステータス
+
     int credit { 0 }; // クレジット数
     int win    { 0 }; // Win数
 
@@ -46,6 +48,8 @@ private:
     void setupScreen();  // 画面の設定
     void setupGame();    // ゲームの初期設定
 
+    void changeScreen(); // ゲームのステータスに応じた画面制御
+    
     void onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type);  // BETボタンがタッチされたとき
     void betAction();    // BETした時のアクション
 

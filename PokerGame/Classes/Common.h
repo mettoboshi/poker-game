@@ -20,4 +20,13 @@ enum class Suit {
     SIZE,
 };
 
+// ゲームのステータス
+enum class GameStatus {
+    BET,
+    BET_WAIT,
+    HOLD,
+    DEAL,
+    OVER
+};
+
 #endif /* PokerGame_Common_h */
