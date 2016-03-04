@@ -197,8 +197,25 @@ void GameScene::changeScreen()
             break;
         }
         case GameStatus::BET_WAIT:
+        {
+            // BETボタン：押せない
+            this->betButton->setBright(false);
+            this->betButton->setTouchEnabled(false);
+
+            // DEALボタン：押せない
+            this->dealButton->setBright(false);
+            this->dealButton->setTouchEnabled(false);
+
+            // HOLD
+            for(int i = 0; i < HANDS_MAX; ++i) {
+                // HOLDボタン：押せない
+                this->holdButtons.at(i)->setVisible(false);
+
+                // HOLD表示：非表示
+                this->holdSprites.at(i)->setVisible(false);
+            }
             break;
-            
+        }
         case GameStatus::HOLD:
             break;
             
@@ -242,15 +259,13 @@ void GameScene::onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type
                 Card *card { deck->dealCard() };
                 hands->setCard(i, card);
             }
-            
-            // DEBUG:手札の中身を確認
-            CCLOG("---");
-            for (int i=0; i<HANDS_MAX; ++i)
-            {
-                Card *card = hands->getCard(i);
-                CCLOG("NO:%d マーク： %d 数字： %d", i, card->getSuit(), card->getNumber());
-            }
 
+            // ステータスをBET_WAITに設定
+            this->gameStatus = GameStatus::BET_WAIT;
+
+            // ステータスに応じた画面制御
+            this->changeScreen();
+            
             // BETした時のアクション
             this->betAction();
 
