@@ -149,6 +149,12 @@ void GameScene::setupScreen()
         this->holdSprites.pushBack(holdSprite);
         this->addChild(holdSprite, 6, i);
     }
+
+    // ステータスをBETに設定
+    this->gameStatus = GameStatus::BET;
+
+    // ステータスに応じた画面制御
+    this->changeScreen();
 }
 
 // ゲームの初期設定
@@ -172,8 +178,24 @@ void GameScene::changeScreen()
     switch (gameStatus)
     {
         case GameStatus::BET:
+        {
+            // BETボタン：押せる
+            this->betButton->setBright(true);
+            this->betButton->setTouchEnabled(true);
+
+            // DEALボタン：押せない
+            this->dealButton->setBright(false);
+            this->dealButton->setTouchEnabled(false);
+
+            for(int i = 0; i < HANDS_MAX; ++i) {
+                // HOLDボタン: 押せない
+                this->holdButtons.at(i)->setVisible(false);
+
+                // HOLD表示：非表示
+                this->holdSprites.at(i)->setVisible(false);
+            }
             break;
-            
+        }
         case GameStatus::BET_WAIT:
             break;
             
