@@ -237,14 +237,88 @@ void GameScene::changeScreen()
             break;
         }
         case GameStatus::DEAL:
+        {
+            // BETボタン：押せない
+            this->betButton->setBright(false);
+            this->betButton->setTouchEnabled(false);
+
+            // DEALボタン：押せない
+            this->dealButton->setBright(false);
+            this->dealButton->setTouchEnabled(false);
+
+            // HOLD
+            for(int i { 0 }; i < HANDS_MAX; i++) {
+                // HOLDボタン：押せない
+                holdButtons.at(i)->setVisible(false);
+
+                // HOLD表示：そのまま
+            }
             break;
-            
+        }
         case GameStatus::OVER:
             break;
             
         default:
             break;
     }
+}
+
+// カードのアクションを実行する
+void GameScene::cardAction(Sprite* sprite, GameStatus nextStatus)
+{
+    // カードを裏面にする
+    Texture2D* cardTexture = Director::getInstance()->getTextureCache()->getTextureForKey("card_1.png");
+    sprite->setTexture(cardTexture);
+    
+    // カードの表示位置を変更
+    sprite->setPosition(Vec2(sprite->getPositionX(), 480.0f));
+    
+    // カードを表示
+    sprite->setVisible(true);
+    
+    // カードを透明にする
+    sprite->setOpacity(0);
+    
+    // カードの横幅を元に戻す
+    sprite->setScaleX(1.0f);
+    
+    // アクションを作成
+    Vector<FiniteTimeAction *>  moveActions;
+    DelayTime::create(sprite->getTag() * 0.2f);
+    moveActions.pushBack(MoveTo::create(0.4f, Vec2(sprite->getPositionX(), 288.0f)));
+    moveActions.pushBack(FadeIn::create(0.4f));
+    Spawn* moveAction { Spawn::create(moveActions) };
+    
+    // アクションをまとめる
+    Vector<FiniteTimeAction *> betActions;
+    betActions.pushBack(DelayTime::create(0.2f * sprite->getTag()));
+    betActions.pushBack(moveAction);
+    
+    // 表にめくるアクション
+    betActions.pushBack(ScaleTo::create(0.3f, 0.0f, 1.0f));
+    betActions.pushBack(CallFunc::create([this, sprite](){
+        // テクスチャを変更
+        Card *card { this->hands->getCard(sprite->getTag()) };
+        Texture2D* cardTexture = Director::getInstance()->getTextureCache()->getTextureForKey(card->getFileName());
+        sprite->setTexture(cardTexture);
+    }));
+    betActions.pushBack(ScaleTo::create(0.3f, 1, 1));
+    
+    // ステータスを変更し、ボタンの制御をおこなう
+    betActions.pushBack(CallFunc::create([this, sprite, nextStatus](){
+        if(sprite->getTag() == HANDS_MAX - 1) {
+            // スプライトのタグがHAND_MAX - 1のとき、ステータスを変更する
+            this->gameStatus = nextStatus;
+
+            // ステータスに応じた画面制御
+            this->changeScreen();
+        }
+    }));
+    
+    Sequence* betAction { Sequence::create(betActions) };
+    
+    // アクションを実行
+    sprite->runAction(betAction);
 }
 
 // BETボタンがタッチされたとき
@@ -300,57 +374,8 @@ void GameScene::betAction() {
     for (int i { 0 }; i < HANDS_MAX; i++){
         Sprite* cardSprite { this->cardSprites.at(i) };
         
-        // カードを全て裏面にする
-        Texture2D* cardTexture = Director::getInstance()->getTextureCache()->getTextureForKey("card_1.png");
-        cardSprite->setTexture(cardTexture);
-
-        // カードの表示位置を変更
-        cardSprite->setPosition(Vec2(cardSprite->getPositionX(), 480.0f));
-
-        // カードを表示
-        cardSprite->setVisible(true);
-
-        // カードを透明にする
-        cardSprite->setOpacity(0);
-        
-        // カードの横幅を元に戻す
-        cardSprite->setScaleX(1.0f);
-
-        // アクションを作成
-        Vector<FiniteTimeAction *>  moveActions;
-        DelayTime::create(i * 0.2f);
-        moveActions.pushBack(MoveTo::create(0.4f, Vec2(cardSprite->getPositionX(), 288.0f)));
-        moveActions.pushBack(FadeIn::create(0.4f));
-        Spawn* moveAction { Spawn::create(moveActions) };
-        
-        // アクションをまとめる
-        Vector<FiniteTimeAction *> betActions;
-        betActions.pushBack(DelayTime::create(0.2f * i));
-        betActions.pushBack(moveAction);
-
-        // 表にめくるアクション
-        betActions.pushBack(ScaleTo::create(0.3f, 0.0f, 1.0f));
-        betActions.pushBack(CallFunc::create([this, cardSprite](){
-            // テクスチャを変更
-            Card *card { this->hands->getCard(cardSprite->getTag()) };
-            Texture2D* cardTexture = Director::getInstance()->getTextureCache()->getTextureForKey(card->getFileName());
-            cardSprite->setTexture(cardTexture);
-        }));
-        betActions.pushBack(ScaleTo::create(0.3f, 1, 1));
-        
-        // ステータスを変更し、ボタンの制御をおこなう
-        betActions.pushBack(CallFunc::create([this, i](){
-            if(i == HANDS_MAX - 1) {
-                // i = HAND_MAX - 1のとき、ステータスをHOLDに変更
-                this->gameStatus = GameStatus::HOLD;
-                this->changeScreen();
-            }
-        }));
-        
-        Sequence* betAction { Sequence::create(betActions) };
-        
         // アクションを実行
-        cardSprite->runAction(betAction);
+        this->cardAction(cardSprite, GameStatus::HOLD);
     }
     
     return;
@@ -363,11 +388,33 @@ void GameScene::onDealButtonTouched(Ref *pSender, ui::Widget::TouchEventType typ
     {
         case ui::Widget::TouchEventType::BEGAN:
         {
-            CCLOG("DEAL");
+            // ステータスをDEALに設定
+            this->gameStatus = GameStatus::DEAL;
+
+            // ステータスに応じた画面制御
+            this->changeScreen();
+            
+            // アクションを実行
+            this->dealAction();
+
             break;
         }
         default:
             break;
+    }
+}
+
+// DEAL時のアクション
+void GameScene::dealAction()
+{
+    // 配るアクションを実行する
+    for (int i { 0 }; i < HANDS_MAX; i++){
+        Sprite* cardSprite { this->cardSprites.at(i) };
+
+        // ホールドされている場合は配り直さない
+        if(this->hands->isHold(cardSprite->getTag())) continue;
+
+        this->cardAction(cardSprite, GameStatus::OVER);
     }
 }
 

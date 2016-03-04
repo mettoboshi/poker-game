@@ -52,11 +52,15 @@ private:
     void setupGame();    // ゲームの初期設定
 
     void changeScreen(); // ゲームのステータスに応じた画面制御
+
+    void cardAction(Sprite* sprite, GameStatus nextStatus); // カードのアクションを実行する
     
     void onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type);  // BETボタンがタッチされたとき
     void betAction();    // BETした時のアクション
 
     void onDealButtonTouched(Ref *pSender, ui::Widget::TouchEventType type); // DEALボタンがタッチされたとき
+    void dealAction();   // DEAL時のアクション
+    
     void onHoldButtonTouched(Ref *pSender, ui::Widget::TouchEventType type); // HOLDボタンのタッチイベント
 
     CREATE_FUNC(GameScene);
