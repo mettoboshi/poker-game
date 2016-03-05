@@ -102,6 +102,69 @@ void Hands::dicisionHand()
         isStraight = true;
     }
 
+    // ペア系の判定
+    // ペアの数のカウント用
+    int pearCount = 0;
+    // ジャックス・オア・ベター
+    bool isJacks = false;
+    // スリーカード
+    bool is3card = false;
+    // フォーカード
+    bool is4card = false;
+    
+    // トランプの数字についてそれぞれ調査する
+    for(int no { 1 }; no <= 13; no++){
+        // 手札に数字が何枚含まれているかを数える
+        int count = 0;
+        for(int i { 0 }; i < HANDS_MAX; i++){
+            // 調査対象の数字ならカウント
+            if(numbers.at(i) == no){
+                count++;
+            }
+        }
+        // 枚数に応じて、ペアのカウントを計算
+        switch(count)
+        {
+            case 2:
+            {
+                // ペアの場合はカウント
+                pearCount++;
+                if(no > 10 || no == 1){
+                    // J Q K A の場合は、ジャックス・オア・ベター
+                    isJacks = true;
+                }
+                break;
+            }
+            case 3:
+            {
+                // スリーカード
+                is3card = true;
+                break;
+            }
+            case 4:
+            {
+                // フォーカード
+                is4card = true;
+                break;
+            }
+        }
+    }
+
+    // ツーペア
+    bool is2pear = false;
+    if(pearCount == 2){
+        is2pear = true;
+    }
+
+    // DEBUG:判定用
+    CCLOG("isRoyal:%d", isRoyal);
+    CCLOG("isStraight:%d", isStraight);
+    CCLOG("isFlush:%d", isFlush);
+    CCLOG("is4card:%d", is4card);
+    CCLOG("is3card:%d", is3card);
+    CCLOG("isJacks:%d", isJacks);
+    CCLOG("pearCount:%d", pearCount);
+
     // 判定
     this->hand = Hand::NOTHING;
     if(isRoyal && isFlush)
@@ -112,6 +175,14 @@ void Hands::dicisionHand()
     {
         this->hand = Hand::STRAIGHT_FLUSH;
     }
+    else if(is4card)
+    {
+        this->hand = Hand::FOUR_OF_A_KIND;
+    }
+    else if(is3card && pearCount > 0)
+    {
+        this->hand = Hand::FULL_HOUSE;
+    }
     else if(isFlush)
     {
         this->hand = Hand::FLUSH;
@@ -119,6 +190,18 @@ void Hands::dicisionHand()
     else if(isRoyal || isStraight)
     {
         this->hand = Hand::STRAIGHT;
+    }
+    else if(is3card)
+    {
+        this->hand = Hand::THREE_OF_A_KIND;
+    }
+    else if(pearCount == 2)
+    {
+        this->hand = Hand::TWOPAIR;
+    }
+    else if(isJacks)
+    {
+        this->hand = Hand::JACKS_OR_BETTER;
     }
 }
 
