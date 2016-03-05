@@ -67,11 +67,58 @@ void Hands::dicisionHand()
     {
         isFlush = true;
     }
+
+    // カードの数字を変数にいれる
+    std::vector<int> numbers {};
+    for (int i { 0 }; i < HANDS_MAX; i++) {
+        numbers.push_back(this->getCard(i)->getNumber());
+    }
+    // ソート
+    std::sort(numbers.begin(), numbers.end());
+    // DEBUG：数字を出す
+    for (int i { 0 }; i < HANDS_MAX; i++) {
+        CCLOG("%d:数字  %d", i, numbers.at(i));
+    }
     
+    // ロイヤル・ストレート
+    bool isRoyal = false;
+    if (numbers.at(0) == 1  &&
+        numbers.at(1) == 10 &&
+        numbers.at(2) == 11 &&
+        numbers.at(3) == 12 &&
+        numbers.at(4) == 13)
+    {
+        isRoyal = true;
+    }
+    
+    // ストレート
+    bool isStraight = false;
+    int firstNumber { numbers.at(0) };
+    if (numbers.at(1) == (firstNumber + 1) &&
+        numbers.at(2) == (firstNumber + 2) &&
+        numbers.at(3) == (firstNumber + 3) &&
+        numbers.at(4) == (firstNumber + 4))
+    {
+        isStraight = true;
+    }
+
     // 判定
     this->hand = Hand::NOTHING;
-    if(isFlush){
+    if(isRoyal && isFlush)
+    {
+        this->hand = Hand::ROYAL_STRAIGHT_FLUSH;
+    }
+    else if(isStraight && isFlush)
+    {
+        this->hand = Hand::STRAIGHT_FLUSH;
+    }
+    else if(isFlush)
+    {
         this->hand = Hand::FLUSH;
+    }
+    else if(isRoyal || isStraight)
+    {
+        this->hand = Hand::STRAIGHT;
     }
 }
 
