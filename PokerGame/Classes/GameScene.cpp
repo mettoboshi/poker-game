@@ -77,7 +77,7 @@ void GameScene::setupScreen()
     // BETボタン
     betButton = ui::Button::create("BET.png", "BET_on.png", "BET_off.png");
     betButton->setPosition(Vec2(795.0f, 76.0f));
-    this->addChild(betButton, 5);
+    this->addChild(betButton, 50);
     betButton->addTouchEventListener(CC_CALLBACK_2(GameScene::onBetButtonTouched, this));
     
     // DEALボタン
@@ -90,7 +90,7 @@ void GameScene::setupScreen()
     // タッチ無効化する
     dealButton->setTouchEnabled(false);
 
-    this->addChild(dealButton, 5);
+    this->addChild(dealButton, 50);
     dealButton->addTouchEventListener(CC_CALLBACK_2(GameScene::onDealButtonTouched, this));
     
     // winラベル
@@ -98,14 +98,14 @@ void GameScene::setupScreen()
     winLabel->setAnchorPoint(Vec2(0, 0));
     winLabel->setPosition(Vec2(34.0f, 108.0f));
     winLabel->setColor(Color3B(255, 0, 0));
-    this->addChild(winLabel, 5);
+    this->addChild(winLabel, 50);
     
     // creditラベル
     creditLabel = Label::createWithSystemFont(StringUtils::format("Credit : $%d", credit), "ariel", 28);
     creditLabel->setAnchorPoint(Vec2(0, 0));
     creditLabel->setPosition(Vec2(34.0f, 76.0f));
     creditLabel->setColor(Color3B(255, 255, 255));
-    this->addChild(creditLabel, 5);
+    this->addChild(creditLabel, 50);
     
     // トランプ画像の読み込み
     TextureCache* textureCache { Director::getInstance()->getTextureCache() };
