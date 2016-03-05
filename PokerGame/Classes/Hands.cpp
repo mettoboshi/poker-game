@@ -56,7 +56,23 @@ bool Hands::isHold(int n) const
 // 役の判定
 void Hands::dicisionHand()
 {
+    // フラッシュ
+    bool isFlush = false;
+    
+    Suit firstSuit { this->getCard(0)->getSuit() };
+    if (firstSuit == this->getCard(1)->getSuit() &&
+        firstSuit == this->getCard(2)->getSuit() &&
+        firstSuit == this->getCard(3)->getSuit() &&
+        firstSuit == this->getCard(4)->getSuit())
+    {
+        isFlush = true;
+    }
+    
+    // 判定
     this->hand = Hand::NOTHING;
+    if(isFlush){
+        this->hand = Hand::FLUSH;
+    }
 }
 
 // 役の取得
