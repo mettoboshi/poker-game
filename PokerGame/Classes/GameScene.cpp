@@ -328,6 +328,12 @@ void GameScene::cardAction(Sprite* sprite, GameStatus nextStatus, bool isLast)
 
             // ステータスに応じた画面制御
             this->changeScreen();
+            
+            // 手役の確定
+            this->hands->dicisionHand();
+            
+            // DEBUG:
+            CCLOG("手役: %d, 手役のレート: %d", this->hands->getHand(), this->hands->getRate());
         }
     }));
     
