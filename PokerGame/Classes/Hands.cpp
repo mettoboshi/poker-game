@@ -75,11 +75,7 @@ void Hands::dicisionHand()
     }
     // ソート
     std::sort(numbers.begin(), numbers.end());
-    // DEBUG：数字を出す
-    for (int i { 0 }; i < HANDS_MAX; i++) {
-        CCLOG("%d:数字  %d", i, numbers.at(i));
-    }
-    
+
     // ロイヤル・ストレート
     bool isRoyal = false;
     if (numbers.at(0) == 1  &&
@@ -155,15 +151,6 @@ void Hands::dicisionHand()
     if(pearCount == 2){
         is2pear = true;
     }
-
-    // DEBUG:判定用
-    CCLOG("isRoyal:%d", isRoyal);
-    CCLOG("isStraight:%d", isStraight);
-    CCLOG("isFlush:%d", isFlush);
-    CCLOG("is4card:%d", is4card);
-    CCLOG("is3card:%d", is3card);
-    CCLOG("isJacks:%d", isJacks);
-    CCLOG("pearCount:%d", pearCount);
 
     // 判定
     this->hand = Hand::NOTHING;
