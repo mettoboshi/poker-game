@@ -300,6 +300,8 @@ void GameScene::changeScreen()
         case GameStatus::OVER:
         {
             // 役表示：非表示
+            this->setHandSprite();
+            
             rateBg->setVisible(true);
             rateText->setVisible(true);
 
@@ -322,6 +324,44 @@ void GameScene::changeScreen()
         }
         default:
             break;
+    }
+}
+
+// 役に応じた画像を設定する
+void GameScene::setHandSprite()
+{
+    Hand hand { this->hands->getHand() };
+
+    // 役に合わせた画像を設定
+    Texture2D* texture { Director::getInstance()->getTextureCache()->getTextureForKey(HandFileName.at(hand))};
+    rateText->setTexture(texture);
+    rateText->setTextureRect(Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height));
+
+    if (hand != Hand::NOTHING)
+    {
+        // 役が揃っている時の背景
+        Texture2D* textureBg { Director::getInstance()->getTextureCache()->getTextureForKey("text_bg_2.png") };
+        
+        rateBg->setTexture(textureBg);
+        rateBg->setTextureRect(Rect(0, 0, textureBg->getContentSize().width, textureBg->getContentSize().height));
+
+        rateBg->setPosition(Vec2(568.0f, 320.0f));
+        
+        // テキスト画像の位置
+        rateText->setPosition(Vec2(568.0f, 540.0f));
+    }
+    else
+    {
+        // 役が揃っていない時の背景
+        Texture2D* textureBg { Director::getInstance()->getTextureCache()->getTextureForKey("text_bg_1.png") };
+        
+        rateBg->setTexture(textureBg);
+        rateBg->setTextureRect(Rect(0, 0, textureBg->getContentSize().width, textureBg->getContentSize().height));
+
+        rateBg->setPosition(Vec2(568.0f, 288.0f));
+
+        // テキスト画像の位置
+        rateText->setPosition(Vec2(568.0f, 288.0f));
     }
 }
 
@@ -372,11 +412,11 @@ void GameScene::cardAction(Sprite* sprite, GameStatus nextStatus, bool isLast)
             // スプライトのタグがHAND_MAX - 1のとき、ステータスを変更する
             this->gameStatus = nextStatus;
 
+            // 手役の確定
+            this->hands->dicisionHand();
+
             // ステータスに応じた画面制御
             this->changeScreen();
-            
-            // 手役の確定
-            this->hands->dicisionHand();          
         }
     }));
     

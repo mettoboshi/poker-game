@@ -46,6 +46,21 @@ enum class Hand
     NOTHING
 };
 
+// 役に対応するファイル名
+const std::map<Hand, std::string> HandFileName
+{
+    { Hand::ROYAL_STRAIGHT_FLUSH, "ROYAL_FLUSH.png" },
+    { Hand::STRAIGHT_FLUSH      , "STRAIGHT_FLUSH.png" },
+    { Hand::FOUR_OF_A_KIND      , "4_OF_A_KIND.png" },
+    { Hand::FULL_HOUSE          , "FULL_HOUSE.png" },
+    { Hand::FLUSH               , "FLUSH.png" },
+    { Hand::STRAIGHT            , "STRAIGHT.png" },
+    { Hand::THREE_OF_A_KIND     , "3_OF_A_KIND.png" },
+    { Hand::TWOPAIR             , "TWO_PAIR.png" },
+    { Hand::JACKS_OR_BETTER     , "JACKS_OR_BETTER.png" },
+    { Hand::NOTHING             , "TRY_AGAIN.png" },
+};
+
 // 配当
 const std::map<Hand, int> Rate
 {
