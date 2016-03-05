@@ -132,6 +132,35 @@ void GameScene::setupScreen()
         // スプライトを配列に保存
         cardSprites.pushBack(sprite);
     }
+
+    // 役名の背景画像を読み込み
+    textureCache->addImage("text_bg_1.png");
+    textureCache->addImage("text_bg_2.png");
+    
+    // 役名の画像を読み込み
+    textureCache->addImage("3_OF_A_KIND.png");
+    textureCache->addImage("4_OF_A_KIND.png");
+    textureCache->addImage("FLUSH.png");
+    textureCache->addImage("FULL_HOUSE.png");
+    textureCache->addImage("GAME_OVER.png");
+    textureCache->addImage("JACKS_OR_BETTER.png");
+    textureCache->addImage("ROYAL_FLUSH.png");
+    textureCache->addImage("STRAIGHT_FLUSH.png");
+    textureCache->addImage("STRAIGHT.png");
+    textureCache->addImage("TRY_AGAIN.png");
+    textureCache->addImage("TWO_PAIR.png");
+    
+    // 役名の背景のスプライト
+    rateBg = Sprite::create("text_bg_1.png");
+    rateBg->setPosition(visibleSize / 2);
+    rateBg->setVisible(false);
+    this->addChild(rateBg, 6);
+    
+    // 役名のスプライト
+    rateText = Sprite::create("TRY_AGAIN.png");
+    rateText->setPosition(Vec2(visibleSize.width / 2, 540.0f));
+    rateText->setVisible(false);
+    this->addChild(rateText, 7);
     
     // HOLDボタンとHOLD画像
     for(int i = 0; i < HANDS_MAX; ++i) {

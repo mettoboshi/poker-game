@@ -33,6 +33,9 @@ private:
     Label* winLabel    { nullptr }; // WINラベル
     Label* creditLabel { nullptr }; // Creditラベル
 
+    Sprite* rateText { nullptr }; // 役名
+    Sprite* rateBg   { nullptr }; // 役名の背景
+    
     Vector<Sprite*> cardSprites {}; // 手札のスプライト
     
     ui::Button* betButton  { nullptr }; // BETボタン
