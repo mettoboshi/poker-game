@@ -52,3 +52,21 @@ bool Hands::isHold(int n) const
 {
     return this->cards.at(n)->hold;
 }
+
+// 役の判定
+void Hands::dicisionHand()
+{
+    this->hand = Hand::NOTHING;
+}
+
+// 役の取得
+Hand Hands::getHand() const
+{
+    return this->hand;
+}
+
+// 配当の取得
+int Hands::getRate() const
+{
+    return Rate.at(this->hand);
+}

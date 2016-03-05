@@ -38,7 +38,8 @@ public:
 // ---- インスタンス変数
 private:
     cocos2d::Map<int, CardState*> cards {}; // 手札のカード
-    
+    Hand hand { Hand::NOTHING };            // 役
+
 // ----- インスタンスメソッド
 private:
     Hands();     // コンストラクタ
@@ -52,6 +53,10 @@ public:
 
     bool toggleHold(int n);           // HOLD状態を切り替える
     bool isHold(int n) const;         // HOLD状態を取得
+    
+    void dicisionHand();              // 役の確定
+    Hand getHand() const;             // 役の取得
+    int getRate() const;              // 配当の取得
 };
 
 #endif /* defined(__PokerGame__Hands__) */
