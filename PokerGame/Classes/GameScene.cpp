@@ -208,6 +208,7 @@ void GameScene::changeScreen()
     {
         case GameStatus::BET:
         {
+            // 役表示：そのまま
             // BETボタン：押せる
             this->betButton->setBright(true);
             this->betButton->setTouchEnabled(true);
@@ -227,6 +228,10 @@ void GameScene::changeScreen()
         }
         case GameStatus::BET_WAIT:
         {
+            // 役表示：非表示
+            rateBg->setVisible(false);
+            rateText->setVisible(false);
+
             // BETボタン：押せない
             this->betButton->setBright(false);
             this->betButton->setTouchEnabled(false);
@@ -247,6 +252,10 @@ void GameScene::changeScreen()
         }
         case GameStatus::HOLD:
         {
+            // 役表示：非表示
+            rateBg->setVisible(false);
+            rateText->setVisible(false);
+
             // BETボタン：押せない
             this->betButton->setBright(false);
             this->betButton->setTouchEnabled(false);
@@ -267,6 +276,10 @@ void GameScene::changeScreen()
         }
         case GameStatus::DEAL:
         {
+            // 役表示：非表示
+            rateBg->setVisible(false);
+            rateText->setVisible(false);
+
             // BETボタン：押せない
             this->betButton->setBright(false);
             this->betButton->setTouchEnabled(false);
@@ -286,6 +299,10 @@ void GameScene::changeScreen()
         }
         case GameStatus::OVER:
         {
+            // 役表示：非表示
+            rateBg->setVisible(true);
+            rateText->setVisible(true);
+
             // BETボタン：押せる
             this->betButton->setBright(true);
             this->betButton->setTouchEnabled(true);
