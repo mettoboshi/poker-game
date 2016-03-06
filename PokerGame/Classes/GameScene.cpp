@@ -498,12 +498,12 @@ void GameScene::onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type
                 hands->setCard(i, card);
             }
 
-            // DEBUG:つみこみ
-            hands->setCard(0, Card::create(Suit::SPADE, 1));
-            hands->setCard(1, Card::create(Suit::SPADE, 3));
-            hands->setCard(2, Card::create(Suit::SPADE, 5));
-            hands->setCard(3, Card::create(Suit::SPADE, 7));
-            hands->setCard(4, Card::create(Suit::SPADE, 9));
+//            // DEBUG:つみこみ
+//            hands->setCard(0, Card::create(Suit::SPADE, 1));
+//            hands->setCard(1, Card::create(Suit::SPADE, 3));
+//            hands->setCard(2, Card::create(Suit::SPADE, 5));
+//            hands->setCard(3, Card::create(Suit::SPADE, 7));
+//            hands->setCard(4, Card::create(Suit::SPADE, 9));
             
             // ステータスをBET_WAITに設定
             this->gameStatus = GameStatus::BET_WAIT;
