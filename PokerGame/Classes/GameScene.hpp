@@ -55,6 +55,7 @@ private:
     void setupGame();    // ゲームの初期設定
 
     void changeScreen(); // ゲームのステータスに応じた画面制御
+    void updateCredit();  // Creditを更新する
     void setHandSprite(); // 役に応じた画像を設定する
 
     void cardAction(Sprite* sprite, GameStatus nextStatus, bool isLast); // カードのアクションを実行する

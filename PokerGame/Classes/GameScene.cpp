@@ -6,6 +6,7 @@
 #include "GameScene.hpp"
 
 #include "Common.h"
+#include "TitleScene.hpp"
 
 Scene* GameScene::createScene()
 {
@@ -299,6 +300,9 @@ void GameScene::changeScreen()
         }
         case GameStatus::OVER:
         {
+            // Creditを更新する
+            this->updateCredit();
+
             // 役表示：非表示
             this->setHandSprite();
             
@@ -327,6 +331,27 @@ void GameScene::changeScreen()
     }
 }
 
+// Creditを更新する
+void GameScene::updateCredit()
+{
+    Hand hand { this->hands->getHand() };
+    
+    if(hand == Hand::NOTHING) return;
+    
+    this->win = Rate.at(hand);
+    this->winLabel->setString(StringUtils::format("Credit : $%d", this->win));
+
+    if(this->win == 0)
+    {
+        creditLabel->setString(StringUtils::format("Credit : $%d", credit));
+    }
+    else
+    {
+        creditLabel->setString(StringUtils::format("Credit : $%d + $%d", credit, win));
+    }
+    this->credit += this->win;
+}
+
 // 役に応じた画像を設定する
 void GameScene::setHandSprite()
 {
@@ -334,11 +359,10 @@ void GameScene::setHandSprite()
 
     // 役に合わせた画像を設定
     Texture2D* texture { Director::getInstance()->getTextureCache()->getTextureForKey(HandFileName.at(hand))};
-    rateText->setTexture(texture);
-    rateText->setTextureRect(Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height));
-
+    
     if (hand != Hand::NOTHING)
     {
+        
         // 役が揃っている時の背景
         Texture2D* textureBg { Director::getInstance()->getTextureCache()->getTextureForKey("text_bg_2.png") };
         
@@ -352,6 +376,11 @@ void GameScene::setHandSprite()
     }
     else
     {
+        // Creditが0以下の場合はゲームオーバー
+        if( this->credit <= 0)
+        {
+            texture = Director::getInstance()->getTextureCache()->getTextureForKey("GAME_OVER.png");
+        }
         // 役が揃っていない時の背景
         Texture2D* textureBg { Director::getInstance()->getTextureCache()->getTextureForKey("text_bg_1.png") };
         
@@ -363,6 +392,9 @@ void GameScene::setHandSprite()
         // テキスト画像の位置
         rateText->setPosition(Vec2(568.0f, 288.0f));
     }
+    
+    rateText->setTexture(texture);
+    rateText->setTextureRect(Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height));
 }
 
 // カードのアクションを実行する
@@ -433,6 +465,16 @@ void GameScene::onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type
     {
         case ui::Widget::TouchEventType::BEGAN:
         {
+            // ゲームオーバー判定
+            if (this->credit <= 0)
+            {
+                // タイトル画面に戻る
+                auto nextScene = TitleScene::createScene();
+                Scene* transition = TransitionFade::create(1.0f, nextScene);
+                Director::getInstance()->replaceScene(transition);
+                return;
+            }
+            
             // Win数の初期化
             this->win = 0;
 
