@@ -444,7 +444,18 @@ void GameScene::cardAction(Sprite* sprite, GameStatus nextStatus, bool isLast)
     // アクションをまとめる
     Vector<FiniteTimeAction *> betActions;
     betActions.pushBack(DelayTime::create(0.2f * sprite->getTag()));
+
+    // 配る用のSEを鳴らす
+    betActions.pushBack(CallFunc::create([](){
+        cocos2d::experimental::AudioEngine::play2d("se_draw.wav", false);
+    }));
+    
     betActions.pushBack(moveAction);
+
+    // カードをめくる用のSEを鳴らす
+    betActions.pushBack(CallFunc::create([](){
+        cocos2d::experimental::AudioEngine::play2d("se_reverce.wav", false);
+    }));
     
     // 表にめくるアクション
     betActions.pushBack(ScaleTo::create(0.3f, 0.0f, 1.0f));
