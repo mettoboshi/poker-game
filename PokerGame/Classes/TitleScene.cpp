@@ -66,6 +66,12 @@ void TitleScene::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
     {
         case ui::Widget::TouchEventType::BEGAN:
         {
+            // 音楽を止める
+            cocos2d::experimental::AudioEngine::stopAll();
+
+            // SEを鳴らす
+            cocos2d::experimental::AudioEngine::play2d("se_coin.wav", false);
+
             Scene* gameScene { GameScene::createScene() };
             TransitionFade* fade = TransitionFade::create(1.0f, gameScene);
             Director::getInstance()->replaceScene(fade);
