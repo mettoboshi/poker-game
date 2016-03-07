@@ -5,6 +5,7 @@
 
 #include "TitleScene.hpp"
 #include "GameScene.hpp"
+#include "audio/include/AudioEngine.h"
 
 USING_NS_CC;
 
@@ -51,6 +52,9 @@ bool TitleScene::init()
     startButton->setPosition(Vec2(568.0f, 130.0f));
     this->addChild(startButton);
     startButton->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchEvent, this));
+
+    // BGMを鳴らす
+    cocos2d::experimental::AudioEngine::play2d("title.wav", true);
 
     return true;
 }
