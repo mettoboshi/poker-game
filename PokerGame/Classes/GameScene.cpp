@@ -7,6 +7,7 @@
 
 #include "Common.h"
 #include "TitleScene.hpp"
+#include "audio/include/AudioEngine.h"
 
 Scene* GameScene::createScene()
 {
@@ -45,6 +46,9 @@ bool GameScene::init()
 
     // 画面表示の設定
     this->setupScreen();
+    
+    // BGMを鳴らす
+    cocos2d::experimental::AudioEngine::play2d("game.wav", true);
     
     return true;
 }
@@ -362,6 +366,8 @@ void GameScene::setHandSprite()
     
     if (hand != Hand::NOTHING)
     {
+        // SEを鳴らす
+        cocos2d::experimental::AudioEngine::play2d("se_get.wav", false);
         
         // 役が揃っている時の背景
         Texture2D* textureBg { Director::getInstance()->getTextureCache()->getTextureForKey("text_bg_2.png") };
@@ -379,8 +385,20 @@ void GameScene::setHandSprite()
         // Creditが0以下の場合はゲームオーバー
         if( this->credit <= 0)
         {
+            // 音楽を止める
+            cocos2d::experimental::AudioEngine::stopAll();
+
+            // SEを鳴らす
+            cocos2d::experimental::AudioEngine::play2d("over.wav", false);
+            
             texture = Director::getInstance()->getTextureCache()->getTextureForKey("GAME_OVER.png");
         }
+        else
+        {
+            // SEを鳴らす
+            cocos2d::experimental::AudioEngine::play2d("se_hold.wav", false);
+        }
+
         // 役が揃っていない時の背景
         Texture2D* textureBg { Director::getInstance()->getTextureCache()->getTextureForKey("text_bg_1.png") };
         
@@ -475,6 +493,9 @@ void GameScene::onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type
                 return;
             }
             
+            // SEを鳴らす
+            cocos2d::experimental::AudioEngine::play2d("se_coin.wav", false);
+            
             // Win数の初期化
             this->win = 0;
 
@@ -542,6 +563,9 @@ void GameScene::onDealButtonTouched(Ref *pSender, ui::Widget::TouchEventType typ
     {
         case ui::Widget::TouchEventType::BEGAN:
         {
+            // SEを鳴らす
+            cocos2d::experimental::AudioEngine::play2d("se_coin.wav", false);
+
             // ステータスをDEALに設定
             this->gameStatus = GameStatus::DEAL;
 
@@ -605,6 +629,9 @@ void GameScene::onHoldButtonTouched(Ref *pSender, ui::Widget::TouchEventType typ
     {
         case ui::Widget::TouchEventType::BEGAN:
         {
+            // SEを鳴らす
+            cocos2d::experimental::AudioEngine::play2d("se_hold.wav", false);
+
             int cardNumber { sprite->getTag() };
 
             // HOLD状態を変更する
