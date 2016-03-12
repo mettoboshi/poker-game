@@ -251,7 +251,7 @@ void GameScene::changeScreen()
                 this->holdButtons.at(i)->setVisible(false);
 
                 // HOLD表示：非表示
-                this->holdSprites.at(i)->setVisible(false);
+                this->holdSprites.at(i)->setVisible(this->hands->isHold(i));
             }
             break;
         }
@@ -539,6 +539,24 @@ void GameScene::onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type
             
             // ステータスをBET_WAITに設定
             this->gameStatus = GameStatus::BET_WAIT;
+            
+            // 手役の確定
+            this->hands->dicisionHand();
+            
+            Hand hand { this->hands->getHand() };
+            
+            // 4枚役以上が確定していた場合全てのカードをHOLDする
+            if(hand == Hand::ROYAL_STRAIGHT_FLUSH ||
+               hand == Hand::STRAIGHT_FLUSH ||
+               hand == Hand::FOUR_OF_A_KIND ||
+               hand == Hand::FULL_HOUSE ||
+               hand == Hand::FLUSH ||
+               hand == Hand::STRAIGHT)
+            {
+                for (int i { 0 }; i < HANDS_MAX; i++){
+                    this->hands->toggleHold(i);
+                }
+            }
 
             // ステータスに応じた画面制御
             this->changeScreen();
