@@ -65,9 +65,13 @@ private:
 
     void onDealButtonTouched(Ref *pSender, ui::Widget::TouchEventType type); // DEALボタンがタッチされたとき
     void dealAction();   // DEAL時のアクション
-    
-    void onHoldButtonTouched(Ref *pSender, ui::Widget::TouchEventType type); // HOLDボタンのタッチイベント
 
+    void onHoldButtonTouched(Ref *pSender, ui::Widget::TouchEventType type); // HOLDボタンがタッチされたとき
+    void cardAction(Sprite* sprite, GameStatus nextStatus, bool isLast, bool isBet); // カードのアクションを実行する
+    Vector<Sprite*> getTurnCards(bool isBet); // めくるカードを取得する
+    void cardTurn(GameStatus nextStatus, bool isBet); // カードをめくる
+    void turnAction(Sprite* sprite, GameStatus nextStatus, bool isLast); // 表にめくるアクション
+    
     CREATE_FUNC(GameScene);
 };
 

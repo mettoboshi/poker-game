@@ -575,13 +575,13 @@ void GameScene::onBetButtonTouched(Ref *pSender, ui::Widget::TouchEventType type
 void GameScene::betAction() {
 
     // 配るアクションを実行する
-    for (int i { 0 }; i < HANDS_MAX; i++){
-        Sprite* cardSprite { this->cardSprites.at(i) };
-
-        // アクションを実行
-        this->cardAction(cardSprite, GameStatus::HOLD, i == HANDS_MAX - 1 ? true : false);
-    }
+    Vector<Sprite*> changedCards { this->getTurnCards(false) };
     
+    for(int i { 0 }; i < changedCards.size(); i++)
+    {
+        this->cardAction(changedCards.at(i), GameStatus::HOLD, i == HANDS_MAX - 1 ? true : false, true);
+    }
+
     return;
 }
 
@@ -621,17 +621,8 @@ void GameScene::onDealButtonTouched(Ref *pSender, ui::Widget::TouchEventType typ
 // DEAL時のアクション
 void GameScene::dealAction()
 {
-    // HOLDされていないカードを探す
-    Vector<Sprite*> changedCards {};
-    for (int i { 0 }; i < HANDS_MAX; i++){
-        Sprite* cardSprite { this->cardSprites.at(i) };
-
-        // ホールドされている場合は配り直さない
-        if(this->hands->isHold(cardSprite->getTag())) continue;
-        
-        changedCards.pushBack(cardSprites.at(i));
-    }
-
+    Vector<Sprite*> changedCards { this->getTurnCards(false) };
+    
     // 全てがHOLDされている場合はカードアクションは実行せず結果を表示する
     if(changedCards.empty())
     {
@@ -645,7 +636,7 @@ void GameScene::dealAction()
     // 配るアクションを実行する
     for(int i { 0 }; i < changedCards.size(); i++)
     {
-        this->cardAction(changedCards.at(i), GameStatus::OVER, i == (changedCards.size() - 1) ? true : false);
+        this->cardAction(changedCards.at(i), GameStatus::OVER, i == (changedCards.size() - 1) ? true : false, false);
     }
 }
 
@@ -671,4 +662,147 @@ void GameScene::onHoldButtonTouched(Ref *pSender, ui::Widget::TouchEventType typ
         default:
             break;
     }
+}
+
+// カードのアクションを実行する
+void GameScene::cardAction(Sprite* sprite, GameStatus nextStatus, bool isLast, bool isBet)
+{
+    // カードを裏面にする
+    Texture2D* cardTexture = Director::getInstance()->getTextureCache()->getTextureForKey("card_1.png");
+    sprite->setTexture(cardTexture);
+    
+    // カードの表示位置を変更
+    sprite->setPosition(Vec2(sprite->getPositionX(), 480.0f));
+    
+    // カードを表示
+    sprite->setVisible(true);
+    
+    // カードを透明にする
+    sprite->setOpacity(0);
+    
+    // カードの横幅を元に戻す
+    sprite->setScaleX(1.0f);
+    
+    // アクションを作成
+    Vector<FiniteTimeAction *>  moveActions;
+    DelayTime::create(sprite->getTag() * 0.2f);
+    moveActions.pushBack(MoveTo::create(0.4f, Vec2(sprite->getPositionX(), 288.0f)));
+    moveActions.pushBack(FadeIn::create(0.4f));
+    Spawn* moveAction { Spawn::create(moveActions) };
+    
+    // アクションをまとめる
+    Vector<FiniteTimeAction *> betActions;
+    betActions.pushBack(DelayTime::create(0.2f * sprite->getTag()));
+
+    // 配る用のSEを鳴らす
+    betActions.pushBack(CallFunc::create([](){
+        cocos2d::experimental::AudioEngine::play2d("se_draw.wav", false);
+    }));
+
+    betActions.pushBack(moveAction);
+
+    // 一番最後のカードの時はカードをめくる関数を呼ぶ
+    betActions.pushBack(CallFunc::create([this, nextStatus, isLast, isBet](){
+        if(isLast) {
+            // カードをめくる
+            this->cardTurn(nextStatus, isBet);
+        }
+    }));
+
+    Sequence* betAction { Sequence::create(betActions) };
+    
+    // アクションを実行
+    sprite->runAction(betAction);
+}
+
+// めくるカードを取得する
+Vector<Sprite*> GameScene::getTurnCards(bool isBet)
+{
+    Vector<Sprite*> turnCards {};
+    
+    if(isBet)
+    {
+        // BETの場合全てのカードをめくる
+        for (int i { 0 }; i < HANDS_MAX; i++)
+        {
+            turnCards.pushBack(this->cardSprites.at(i));
+        }
+    }
+    else
+    {
+        // HOLDされていないカードを探す
+        Vector<Sprite*> changedCards {};
+        for (int i { 0 }; i < HANDS_MAX; i++){
+            Sprite* cardSprite { this->cardSprites.at(i) };
+            
+            // ホールドされている場合は配り直さない
+            if(this->hands->isHold(cardSprite->getTag())) continue;
+            
+            turnCards.pushBack(cardSprites.at(i));
+        }
+    }
+    return turnCards;
+}
+
+// カードをめくる
+void GameScene::cardTurn(GameStatus nextstatus, bool isBet)
+{
+    Vector<Sprite*> changedCards { this->getTurnCards(isBet) };
+    
+    // 配るアクションを実行する
+    for(int i { 0 }; i < changedCards.size(); i++)
+    {
+        GameStatus nextStatus = GameStatus::HOLD;
+
+        if(!isBet) {
+            nextStatus = GameStatus::OVER;
+        }
+        
+        this->turnAction(changedCards.at(i), nextstatus, i == (changedCards.size() - 1) ? true : false);
+    }
+}
+
+// 表にめくるアクション
+void GameScene::turnAction(Sprite* sprite, GameStatus nextStatus, bool isLast)
+{
+    // アクションをまとめる
+    Vector<FiniteTimeAction *> actions;
+
+    // ディレイ
+    actions.pushBack(DelayTime::create(0.2f * sprite->getTag()));
+    
+    // カードをめくる用のSEを鳴らす
+    actions.pushBack(CallFunc::create([](){
+        cocos2d::experimental::AudioEngine::play2d("se_reverce.wav", false);
+    }));
+    
+    // 表にめくるアクション
+    actions.pushBack(ScaleTo::create(0.3f, 0.0f, 1.0f));
+    actions.pushBack(CallFunc::create([this, sprite](){
+        // テクスチャを変更
+        Card *card { this->hands->getCard(sprite->getTag()) };
+        Texture2D* cardTexture = Director::getInstance()->getTextureCache()->getTextureForKey(card->getFileName());
+        sprite->setTexture(cardTexture);
+    }));
+    actions.pushBack(ScaleTo::create(0.3f, 1, 1));
+    
+    // ステータスを変更し、ボタンの制御、手役の決定をおこなう
+    actions.pushBack(CallFunc::create([this, nextStatus, isLast](){
+        if(isLast) {
+            // スプライトのタグがHAND_MAX - 1のとき、ステータスを変更する
+            this->gameStatus = nextStatus;
+
+            // 手役の確定
+            this->hands->dicisionHand();
+
+            // ステータスに応じた画面制御
+            this->changeScreen();
+        }
+    }));
+
+    // めくるアクション
+    Sequence* turnAction { Sequence::create(actions) };
+
+    // アクションを実行
+    sprite->runAction(turnAction);
 }
