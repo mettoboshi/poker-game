@@ -99,16 +99,16 @@ void GameScene::setupScreen()
     dealButton->addTouchEventListener(CC_CALLBACK_2(GameScene::onDealButtonTouched, this));
     
     // winラベル
-    winLabel = Label::createWithSystemFont(StringUtils::format("Win : $%d", win), "ariel", 28);
+    winLabel = Label::createWithSystemFont(StringUtils::format("Win : $%d", win), "ariel", 38);
     winLabel->setAnchorPoint(Vec2(0, 0));
-    winLabel->setPosition(Vec2(34.0f, 108.0f));
+    winLabel->setPosition(Vec2(34.0f, 85.0f));
     winLabel->setColor(Color3B(255, 0, 0));
     this->addChild(winLabel, 50);
     
     // creditラベル
-    creditLabel = Label::createWithSystemFont(StringUtils::format("Credit : $%d", credit), "ariel", 28);
+    creditLabel = Label::createWithSystemFont(StringUtils::format("Credit : $%d", credit), "ariel", 38);
     creditLabel->setAnchorPoint(Vec2(0, 0));
-    creditLabel->setPosition(Vec2(34.0f, 76.0f));
+    creditLabel->setPosition(Vec2(34.0f, 40.0f));
     creditLabel->setColor(Color3B(255, 255, 255));
     this->addChild(creditLabel, 50);
     
